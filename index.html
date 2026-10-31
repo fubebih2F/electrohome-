@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElectroHome | Tu Hogar, Tu Tecnología</title>
+    <style>
+        :root {
+            --lavanda: #E6E6FA;
+            --aqua: #7FFFD4;
+            --dark-aqua: #45b1a8;
+            --white: #ffffff;
+            --gray: #f4f4f4;
+            --text: #333;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            background-color: var(--white);
+            color: var(--text);
+            scroll-behavior: smooth;
+        }
+
+        /* Header y Navegación */
+        header {
+            background: var(--white);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .logo { font-weight: 800; font-size: 1.8rem; color: var(--dark-aqua); letter-spacing: -1px; }
+        .logo span { color: #9370DB; } /* Toque lavanda */
+
+        nav a {
+            margin: 0 12px;
+            text-decoration: none;
+            color: var(--text);
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        nav a:hover { color: var(--dark-aqua); }
+
+        .search-container { display: flex; align-items: center; gap: 10px; }
+        .search-bar { padding: 8px; border: 1.5px solid var(--lavanda); border-radius: 20px; outline: none; }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, var(--white), var(--lavanda), var(--aqua));
+            padding: 60px 5%;
+            text-align: center;
+        }
+
+        /* Secciones de Catálogo */
+        section { padding: 60px 5%; }
+        h2 { text-align: center; color: var(--dark-aqua); margin-bottom: 40px; text-transform: uppercase; letter-spacing: 2px; }
+        
+        .catalog-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .product-card {
+            border: 1px solid var(--lavanda);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: 0.3s;
+            background: white;
+        }
+        .product-card:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .product-card img { width: 100%; height: 200px; object-fit: contain; border-radius: 10px; margin-bottom: 15px; background: #f9f9f9; }
+        .product-card h3 { font-size: 1.1rem; margin: 10px 0; }
+        .product-card p { font-size: 0.85rem; color: #666; height: 40px; }
+        .price { font-weight: bold; color: var(--dark-aqua); font-size: 1.3rem; display: block; margin: 10px 0; }
+
+        .btn-buy {
+            background-color: var(--dark-aqua);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .btn-buy:hover { background-color: #368d85; }
+
+        /* Carrito Lateral */
+        #cart-sidebar {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 380px;
+            height: 100%;
+            background: white;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            transition: 0.4s;
+            z-index: 2000;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+        #cart-sidebar.active { right: 0; }
+
+        .free-ship-badge {
+            background: #e1fdf5;
+            color: #1b5e20;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid var(--aqua);
+        }
+
+        /* Footer */
+        footer { background: var(--lavanda); padding: 40px 5%; text-align: center; }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">Electro<span>Home</span></div>
+    <nav>
+        <a href="#inicio">Inicio</a>
+        <a href="#refrigeracion">Refrigeración</a>
+        <a href="#cocina">Cocina</a>
+        <a href="#lavado">Lavado</a>
+        <a href="#climatizacion">Clima</a>
+        <a href="#tecnologia">Tecnología</a>
+    </nav>
+    <div class="search-container">
+        <input type="text" class="search-bar" placeholder="¿Qué buscas hoy?">
+        <button onclick="toggleCart()" style="background:none; border:none; font-size: 1.5rem; cursor:pointer;">🛒 <span id="count-badge" style="font-size:1rem; background: var(--aqua); border-radius:50%; padding:2px 7px;">0</span></button>
+    </div>
+</header>
+
+<section class="hero" id="inicio">
+    <h1>Calidad que transforma tu hogar</h1>
+    <p>Explora nuestras categorías y aprovecha los mejores precios del mercado.</p>
+    <div style="margin-top: 20px; font-weight: bold; color: #555;">
+        🚛 ¡ENVÍO GRATIS en compras superiores a $500.000 COP!
+    </div>
+</section>
+
+<!-- REFRIGERACIÓN -->
+<section id="refrigeracion">
+    <h2>❄️ Refrigeración</h2>
+    <div class="catalog-container">
+        <div class="product-card">
+            <img src="https://www.almacenestropigas.com/media/catalog/product/4/6/462510400013_1.jpg?bg-color=255%2C255%2C255&canvas=700%3A700&fit=bounds&height=700&optimize=medium&width=700" alt="Nevera" loading="lazy" decoding="async">
+            <h3>Nevera Side by Side 500L</h3>
+            <p>Acero inoxidable con dispensador de agua y ahorro de energía.</p>
+            <span class="price">$2.450.000</span>
+            <button class="btn-buy" onclick="addToCart('Nevera Side', 2450000)">Agregar al carrito</button>
+        </div>
+        <div class="product-card">
+            <img src="https://res.cloudinary.com/htt8g4cd/image/upload/t_825x825/f_auto%2Cq_auto/we/288031801_1" alt="Cava" loading="lazy" decoding="async">
+            <h3>Cava de Vinos Premium</h3>
+            <p>Capacidad para 12 botellas con control digital de temperatura.</p>
+            <span class="price">$480.000</span>
+            <button class="btn-buy" onclick="addToCart('Cava Vinos', 480000)">Agregar al carrito</button>
+        </div>
+    </div>
+</section>
+
+<!-- COCINA -->
+<section id="cocina" style="background-color: #fafafa;">
+    <h2>🍳 Cocina</h2>
+    <div class="catalog-container">
+        <div class="product-card">
+            <img src="https://mimbralb2c.vtexassets.com/arquivos/ids/218776-800-1067?aspect=true&height=1067&width=800" alt="Estufa" loading="lazy" decoding="async">
+            <h3>Estufa Empotrable Cristal</h3>
+            <p>4 quemadores de alta eficiencia y encendido electrónico.</p>
+            <span class="price">$520.000</span>
+            <button class="btn-buy" onclick="addToCart('Estufa Empotrable', 520000)">Agregar al carrito</button>
+        </div>
+        <div class="product-card">
+            <img src="https://m.media-amazon.com/images/I/41g9VpENCYL._SS600_.jpg" alt="Air Fryer" loading="lazy" decoding="async">
+            <h3>Air Fryer XL 5.5L</h3>
+            <p>Cocina saludable sin aceite con panel táctil inteligente.</p>
+            <span class="price">$310.000</span>
+            <button class="btn-buy" onclick="addToCart('Air Fryer XL', 310000)">Agregar al carrito</button>
+        </div>
+    </div>
+</section>
+
+<!-- LAVADO -->
+<section id="lavado">
+    <h2>🧺 Lavado</h2>
+    <div class="catalog-container">
+        <div class="product-card">
+            <img src="https://images.squarespace-cdn.com/content/v1/60b4343adf3b1702ea34281a/1708919626902-HKVYO47HZ294OKT8GTDE/EFLW802W_web_.jpg?format=1500w" alt="Lavadora" loading="lazy" decoding="async">
+            <h3>Lavadora Carga Frontal 18kg</h3>
+            <p>Tecnología Inverter que cuida tus prendas y ahorra agua.</p>
+            <span class="price">$1.890.000</span>
+            <button class="btn-buy" onclick="addToCart('Lavadora 18kg', 1890000)">Agregar al carrito</button>
+        </div>
+        <div class="product-card">
+            <img src="https://correamateriais.cdn.magazord.com.br/img/2026/06/produto/15181/secadora-de-roupas-11-2-kg-healthguard-branca-midea-18-13.png?ims=600x600" alt="Secadora" loading="lazy" decoding="async">
+            <h3>Secadora de Carga Superior</h3>
+            <p>Múltiples ciclos de secado y filtro atrapamotas avanzado.</p>
+            <span class="price">$1.200.000</span>
+            <button class="btn-buy" onclick="addToCart('Secadora', 1200000)">Agregar al carrito</button>
+        </div>
+    </div>
+</section>
+
+<!-- CLIMATIZACIÓN -->
+<section id="climatizacion" style="background-color: #fafafa;">
+    <h2>🌬️ Climatización</h2>
+    <div class="catalog-container">
+        <div class="product-card">
+            <img src="https://cdn.store-assets.com/s/242733/i/10593681.jpeg" alt="Aire" loading="lazy" decoding="async">
+            <h3>Aire Acondicionado 12000 BTU</h3>
+            <p>Silencioso, eficiente y con control vía WiFi.</p>
+            <span class="price">$1.350.000</span>
+            <button class="btn-buy" onclick="addToCart('Aire Acond', 1350000)">Agregar al carrito</button>
+        </div>
+        <div class="product-card">
+            <img src="https://img.ricardostatic.ch/images/55f55a5b-de31-4b37-acf5-3f91d63f4909/t_1000x750/furbercool-turmventilator" alt="Ventilador" loading="lazy" decoding="async">
+            <h3>Ventilador de Torre Pro</h3>
+            <p>Tres velocidades y control remoto para tu comodidad.</p>
+            <span class="price">$220.000</span>
+            <button class="btn-buy" onclick="addToCart('Ventilador Torre', 220000)">Agregar al carrito</button>
+        </div>
+    </div>
+</section>
+
+<!-- TECNOLOGÍA -->
+<section id="tecnologia">
+    <h2>📱 Tecnología</h2>
+    <div class="catalog-container">
+        <div class="product-card">
+            <img src="https://api.mdp.co.id/upload/pictures/product/HE1748.jpg" alt="TV" loading="lazy" decoding="async">
+            <h3>Smart TV 55" 4K UHD</h3>
+            <p>Imagen cristalina con apps integradas: Netflix y YouTube.</p>
+            <span class="price">$1.650.000</span>
+            <button class="btn-buy" onclick="addToCart('Smart TV 55', 1650000)">Agregar al carrito</button>
+        </div>
+        <div class="product-card">
+            <img src="https://cdn.ecdn.dk/boligcenter/img/p/1/1/9/6/4/0/4/6/11964046.jpg" alt="Audio" loading="lazy" decoding="async">
+            <h3>Barra de Sonido Surround</h3>
+            <p>Bajos potentes y conectividad Bluetooth 5.0.</p>
+            <span class="price">$450.000</span>
+            <button class="btn-buy" onclick="addToCart('Barra Sonido', 450000)">Agregar al carrito</button>
+        </div>
+    </div>
+</section>
+
+<!-- Carrito Lateral -->
+<div id="cart-sidebar">
+    <h2>Tu Compra</h2>
+    <div id="cart-items" style="flex-grow: 1; overflow-y: auto; margin-bottom: 20px;">
+        <!-- Items dinámicos -->
+    </div>
+    <div id="shipping-info"></div>
+    <hr>
+    <h3>Total: $<span id="cart-total">0</span></h3>
+    
+    <label>Forma de pago:</label>
+    <select id="payment-method" style="width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px;">
+        <option value="nequi">Nequi</option>
+        <option value="daviplata">Daviplata</option>
+        <option value="pse">PSE / Tarjeta</option>
+    </select>
+
+    <button class="btn-buy" style="background: #9370DB;" onclick="checkout()">FINALIZAR COMPRA</button>
+    <button onclick="toggleCart()" style="margin-top:10px; border:none; background:none; cursor:pointer; color:red;">Cerrar</button>
+</div>
+
+<footer id="contacto">
+    <h3>ElectroHome S.A.S</h3>
+    <p>📍 Calle 100 #15-20, Bogotá, Colombia</p>
+    <p>📞 Tel: 01-8000-ELECTRO | 📧 contacto@electrohome.com</p>
+    <div style="margin-top: 20px; font-size: 0.8rem; color: #777;">© 2024 ElectroHome - Todos los derechos reservados.</div>
+</footer>
+
+<script>
+    let cart = [];
+    let total = 0;
+
+    function toggleCart() {
+        document.getElementById('cart-sidebar').classList.toggle('active');
+    }
+
+    function addToCart(name, price) {
+        cart.push({name, price});
+        updateCartUI();
+        if(!document.getElementById('cart-sidebar').classList.contains('active')) {
+            toggleCart();
+        }
+    }
+
+    function updateCartUI() {
+        const itemsDiv = document.getElementById('cart-items');
+        const totalSpan = document.getElementById('cart-total');
+        const badge = document.getElementById('count-badge');
+        const shippingDiv = document.getElementById('shipping-info');
+        
+        itemsDiv.innerHTML = '';
+        total = 0;
+
+        cart.forEach((item, index) => {
+            total += item.price;
+            itemsDiv.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:0.9rem;">
+                <span>${item.name}</span>
+                <span>$${item.price.toLocaleString()}</span>
+            </div>`;
+        });
+
+        totalSpan.innerText = total.toLocaleString();
+        badge.innerText = cart.length;
+
+        if(total >= 500000) {
+            shippingDiv.innerHTML = '<div class="free-ship-badge">✨ Tienes ENVÍO GRATIS aplicado</div>';
+        } else if (total > 0) {
+            let missing = 500000 - total;
+            shippingDiv.innerHTML = `<div style="font-size:0.8rem; color:#555;">Te faltan <b>$${missing.toLocaleString()}</b> para envío gratis.</div>`;
+        } else {
+            shippingDiv.innerHTML = '';
+        }
+    }
+
+    function checkout() {
+        if(cart.length === 0) {
+            alert("El carrito está vacío.");
+            return;
+        }
+        
+        const method = document.getElementById('payment-method').value;
+        alert("¡Gracias por tu compra con " + method.toUpperCase() + "!\n\nSu pedido será enviado en un lapso de 5 días.");
+        
+        // Reset carrito
+        cart = [];
+        updateCartUI();
+        toggleCart();
+    }
+</script>
+
+</body>
+</html>
+
